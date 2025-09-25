@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Moodify - Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="dashboard-body">
+
+  <aside class="sidebar">
+    <h2 class="sidebar-logo">Moodify</h2>
+    <ul>
+      <li>Home</li>
+      <li>My Mood</li>
+      <li>Now Playing</li>
+      <li>Favorites</li>
+      <li>Recommendation</li>
+      <li>Settings</li>
+      <li id="logout"><img src="logout.png" alt="Logout" class="icon"> Logout</li>
+    </ul>
+  </aside>
+
+  <main class="main-content">
+    <h2 id="greeting">Hey User, how are you feeling today?</h2>
+    <div class="mood-cards">
+      <div class="mood-card happy" onclick="goToSongs('Happy')">
+        <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Smiling%20Face%20with%20Smiling%20Eyes.png" 
+             alt="Happy Face" width="30" height="30" />
+        <span>Happy</span>
+      </div>
+
+      <div class="mood-card sad" onclick="goToSongs('Sad')">
+        <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Crying%20Face.png" 
+             alt="Crying Face" width="25" height="25" />
+        <span>Sad</span>
+      </div>
+
+      <div class="mood-card calm" onclick="goToSongs('Calm')">
+        <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Relieved%20Face.png" 
+             alt="Relieved Face" width="25" height="25" />
+        <span>Calm</span>
+      </div>
+
+      <div class="mood-card energetic" onclick="goToSongs('Energetic')">
+        <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/People/Man%20Dancing.png" 
+             alt="Man Dancing" width="25" height="25" />
+        <span>Energetic</span>
+      </div>
+
+      <div class="mood-card romantic" onclick="goToSongs('Romance')">
+        <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Beating%20Heart.png" 
+             alt="Beating Heart" width="25" height="25" />
+        <span>Romance</span>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    
+    const user = localStorage.getItem("moodifyUser") || "User";
+    document.getElementById("greeting").textContent = `Hey ${user}, how are you feeling today?`;
+
+    document.getElementById("logout").addEventListener("click", () => {
+      localStorage.removeItem("moodifyUser");
+      window.location.href = "login.html";
+    });
+
+    function goToSongs(mood) {
+      window.location.href = `songlist.html?mood=${mood}`;
+    }
+  </script>
+
+</body>
+</html>

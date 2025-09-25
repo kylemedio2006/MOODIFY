@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Moodify - Login</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="login-body">
+  <div class="login-container">
+    <div class="logo">
+      <img src="moodify.png" alt="Moodify Logo">
+      <h1>Moodify</h1>
+    </div>
+
+    <form id="loginForm">
+      <div class="input-box">
+        <span>👤</span>
+        <input type="text" id="username" placeholder="Username" required>
+      </div>
+      <div class="input-box">
+        <span>🔒</span>
+        <input type="password" id="password" placeholder="Password" required>
+      </div>
+      <button type="submit" class="btn">LogIn</button>
+      <p class="signup-text">Don’t have any account? <a href="#">SignUp</a></p>
+    </form>
+
+    <div id="errorBox" class="error-box">
+      Wrong Password
+      <span><img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Face%20with%20Raised%20Eyebrow.png" 
+        alt="Face with Raised Eyebrow" width="25" height="25" />
+      </span>
+      
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("loginForm").addEventListener("submit", function(e) {
+      e.preventDefault(); 
+
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const errorBox = document.getElementById("errorBox");
+
+      const correctUsername = "Kyle";
+      const correctPassword = "1213";
+
+      if (username === correctUsername && password === correctPassword) {
+        localStorage.setItem("moodifyUser", username);
+        window.location.href = "dashboard.html";
+      } else {
+        errorBox.style.display = "block";
+        setTimeout(() => {
+          errorBox.style.display = "none";
+        }, 3000);
+      }
+    });
+  </script>
+</body>
+</html>
