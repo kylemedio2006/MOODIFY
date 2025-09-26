@@ -469,10 +469,13 @@ body {
   gap: 10px;
 }
 
+/* Glass effects button */
 .player-controls {
-  display: flex;
-  gap: 15px;
-  align-items: center;
+  display: flex;           
+  gap: 20px;               
+  align-items: center;     
+  justify-content: center; 
+  flex-wrap: nowrap;       
 }
 
 .player-controls button {
@@ -481,10 +484,10 @@ body {
   color: #fff;
   font-size: 20px;
   cursor: pointer;
-  padding: 10px;
+  padding: 15px;
   border-radius: 50%;
-  width: 45px;
-  height: 45px;
+  width: 55px;
+  height: 55px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -492,15 +495,46 @@ body {
   backdrop-filter: blur(10px);
 }
 
+#playBtn {
+  background: linear-gradient(135deg, #ff5db1, #ffcc33);
+  font-size: 24px;
+}
+
 .player-controls button:hover {
   background: rgba(255,255,255,0.2);
   transform: scale(1.1);
 }
 
-#playBtn {
-  background: linear-gradient(135deg, #ff5db1, #ffcc33);
-  font-size: 24px;
+#playBtn:hover {
+  transform: scale(1.2);
+  background: linear-gradient(135deg, rgba(255,93,177,0.5), rgba(255,204,51,0.5));
 }
+
+
+.player-volume input[type="range"] {
+  background: rgba(255,255,255,0.08);
+  height: 6px;
+  border-radius: 10px;
+  -webkit-appearance: none;
+}
+
+.player-volume input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: rgba(255,93,177,0.8);
+  cursor: pointer;
+  border: 1px solid rgba(255,255,255,0.3);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  transition: all 0.2s ease;
+}
+
+.player-volume input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  background: rgba(255,93,177,1);
+}
+
 
 #playBtn:hover {
   transform: scale(1.15);

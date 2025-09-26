@@ -1,5 +1,6 @@
 const audio = document.getElementById("audioPlayer");
 const songTitle = document.getElementById("songTitle");
+const songArtist = document.getElementById("songArtist");
 const songImage = document.getElementById("songImage");
 const progress = document.getElementById("progress");
 const playBtn = document.getElementById("playBtn");
@@ -12,37 +13,48 @@ const songsContainer = document.getElementById("songsContainer");
 let currentSongIndex = 0;
 let isPlaying = false;
 
-
+const songs = [
+  { title: "Song 1", artist: "Artist 1", src: "song1.mp3", image: "img1.jpg" },
+  { title: "Song 2", artist: "Artist 2", src: "song2.mp3", image: "img2.jpg" },
+  { title: "Song 3", artist: "Artist 3", src: "song3.mp3", image: "img3.jpg" }
+];
 
 function playSong(title, image, src, index = 0) {
-  const song = songs.find(s => s.title === title) || songs[index];
-  
+  const song = songs[index];
   songTitle.textContent = song.title;
-  document.getElementById("songArtist").textContent = song.artist;
+  songArtist.textContent = song.artist;
   songImage.src = song.image;
   audio.src = song.src;
-  
-  currentSongIndex = songs.findIndex(s => s.title === song.title);
-  
+  currentSongIndex = index;
+
   audio.play().then(() => {
     isPlaying = true;
-    playBtn.textContent = "⏸️";
-  }).catch(error => {
-    console.log("Play error:", error);
-  });
+    playBtn.querySelector('i').classList.remove('fa-play');
+    playBtn.querySelector('i').classList.add('fa-pause');
+  }).catch(() => {});
 }
 
+
 function togglePlay() {
-  if (audio.paused) {
-    audio.play();
-    isPlaying = true;
-    playBtn.textContent = "⏸️";
+  const icon = playBtn.querySelector('i');
+  if (audio.paused || audio.ended) {
+    audio.play()
+      .then(() => {
+        isPlaying = true;
+        icon.classList.remove('fa-play');
+        icon.classList.add('fa-pause');
+      })
+      .catch(() => {
+        isPlaying = false;
+      });
   } else {
     audio.pause();
     isPlaying = false;
-    playBtn.textContent = "▶️";
+    icon.classList.remove('fa-pause');
+    icon.classList.add('fa-play');
   }
 }
+
 
 function prevSong() {
   currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
@@ -58,7 +70,7 @@ function nextSong() {
 
 function toggleMute() {
   audio.muted = !audio.muted;
-  volumeControl.value = audio.muted ? 0 : 100;
+  volumeControl.value = audio.muted ? 0 : audio.volume * 100;
 }
 
 function formatTime(seconds) {
@@ -67,15 +79,13 @@ function formatTime(seconds) {
   return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
 }
 
-//EventListeners
 progress.addEventListener("input", () => {
-  const seekTime = (progress.value / 100) * audio.duration;
-  audio.currentTime = seekTime;
+  audio.currentTime = (progress.value / 100) * audio.duration;
 });
 
 volumeControl.addEventListener("input", () => {
   audio.volume = volumeControl.value / 100;
-  audio.muted = volumeControl.value === 0;
+  audio.muted = audio.volume === 0;
 });
 
 audio.addEventListener("timeupdate", () => {
@@ -86,25 +96,14 @@ audio.addEventListener("timeupdate", () => {
   }
 });
 
-audio.addEventListener("ended", () => {
-  nextSong();
-});
+audio.addEventListener("ended", nextSong);
+audio.addEventListener("loadedmetadata", () => durationEl.textContent = formatTime(audio.duration));
 
-audio.addEventListener("loadedmetadata", () => {
-  durationEl.textContent = formatTime(audio.duration);
-});
-
-//Searchfunction
-searchInput.addEventListener("input", (e) => {
+searchInput.addEventListener("input", e => {
   const searchTerm = e.target.value.toLowerCase();
-  const songElements = songsContainer.getElementsByClassName('song');
-  
-  Array.from(songElements).forEach((songEl, index) => {
-    const songText = songEl.textContent.toLowerCase();
-    if (songText.includes(searchTerm)) {
-      songEl.style.display = 'flex';
-    } else {
-      songEl.style.display = 'none';
-    }
+  Array.from(songsContainer.getElementsByClassName('song')).forEach(songEl => {
+    songEl.style.display = songEl.textContent.toLowerCase().includes(searchTerm) ? 'flex' : 'none';
   });
 });
+
+playSong(songs[0].title, songs[0].image, songs[0].src, 0);
