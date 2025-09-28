@@ -14,7 +14,7 @@ let currentSongIndex = 0;
 let isPlaying = false;
 
 const songs = [
-  { title: "Song 1", artist: "Artist 1", src: "song1.mp3", image: "img1.jpg" },
+  { title: "Libre Sampak feat. Vicky", artist: "NoPets Allowed", src: "NoPetsAllowed - Libre Sampak feat. Vicky.mp3", image: "sh.jpg" },
   { title: "Song 2", artist: "Artist 2", src: "song2.mp3", image: "img2.jpg" },
   { title: "Song 3", artist: "Artist 3", src: "song3.mp3", image: "img3.jpg" }
 ];
